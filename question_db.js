@@ -87,7 +87,7 @@ class Db {
       let promises = [];
 
       for (let i = 0; i < count; i++) {
-        let question = new questionModel({
+        let question = new this.questionModel({
           question: getRandomQuestion(),
           answer: getRandomAnswer(),
         });
