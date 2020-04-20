@@ -1,67 +1,86 @@
-import React, { Component } from "react";
-import Questions from "./Questions";
+import React, {Component} from 'react';
+import {Router} from "@reach/router";
 import Question from "./Question";
-import { Router } from "@reach/router";
+import Questions from "./Questions";
+import AskQuestion from './AskQuestion';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      questions: [],
-    };
-  }
+    // API url from the file '.env' OR the file '.env.development'.
+    // The first file is only used in production.
+    API_URL = process.env.REACT_APP_API_URL;
 
-  componentDidMount() {
-    this.getData();
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            questions: []
+        };
+    }
 
-  async getData() {
-    const url = "http://localhost:8080/api/questions";
-    const response = await fetch(url);
-    const data = await response.json();
-    this.setState({
-      questions: data,
-    });
-  }
+    componentDidMount() {
+        // Get everything from the API
+        this.getQuestions().then(() => console.log("Questions gotten!"));
+    }
 
-  getQuestion(id) {
-    const question = this.state.questions.find((q) => q.id === parseInt(id));
-    return question;
-  }
+    async getQuestions() {
+        let url = `${this.API_URL}/kittens`; // URL of the API.
+        let result = await fetch(url); // Get the data
+        let json = await result.json(); // Turn it into json
+        return this.setState({ // Set it in the state
+            questions: json
+        })
+    }
 
-  async postAnswer(id, text) {
-    console.log("postAnswer", id, text);
-    const url = `http://localhost:8080/api/questions/${id}/answers`;
+    getQuestion(id) {
+        // Find the relevant kitten by id
+        return this.state.questions.find(q => q._id === id);
+    }
 
-    const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        text: text,
-      }),
-    });
-    const data = await response.json();
-    console.log("Printing the response:", data);
-  }
+    async postAnswer(id, text) {
+        console.log("postAnswer", id, text);
+        const url = `http://localhost:8080/api/kittens/${id}/hobbies`;
+    
+        const response = await fetch(url, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            hobby: text,
+          }),
+        });
+        const data = await response.json();
+        console.log("Printing the response:", data);
+      }
 
-  render() {
-    return (
-      <React.Fragment>
-        <h1>QA</h1>
+      
+    async askQuestion(text) {
+        console.log("askQuestion", text);
+        const url = `http://localhost:8080/api/kittens`;
+    
+        const response = await fetch(url, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            content: text,
+          }),
+        });
+        const data = await response.json();
+        console.log("Printing the response:", data);
+      }
 
-        <Router>
-          <Questions path="/" data={this.state.questions}></Questions>
-          <Question
-            path="/api/questions/:id"
-            getQuestion={(id) => this.getQuestion(id)}
-            postAnswer={(id, text) => this.postAnswer(id, text)}
-          ></Question>
-        </Router>
-      </React.Fragment>
-    );
-  }
+    render() {
+        return (
+            <>  
+                <AskQuestion path="/kittens" askQuestion={(text) => this.askQuestion(text)} />
+                <Router>
+                    <Question path="/kitten/:id" getQuestion={id => this.getQuestion(id)}  postAnswer={(id, text) => this.postAnswer(id, text)}/>
+                    <Questions path="/" questions={this.state.questions}/>
+                </Router>
+            </>
+        );
+    }
 }
 
 export default App;

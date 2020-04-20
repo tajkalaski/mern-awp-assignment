@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "@reach/router";
 
-class PostAnswer extends Component {
+class AskQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,18 +17,17 @@ class PostAnswer extends Component {
     }
 
     onSubmit() {
-        this.props.postAnswer(this.props.id, this.state.input);
+        this.props.askQuestion(this.state.input);
     }
 
     render() {
         return (
             <>
                 <input name="input" onChange={event => this.onChange(event)} type="text"/>
-                <button onClick={_ => this.onSubmit()}>Post Answer</button>
+                <button onClick={_ => this.onSubmit()}>Post Question</button>
             </>
         )
     }
 }
 
-export default PostAnswer;
-
+export default AskQuestion;

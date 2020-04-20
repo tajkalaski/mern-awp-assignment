@@ -1,47 +1,47 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const path = require("path");
+const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const path = require('path');
 
 /**** Configuration ****/
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json()); // Parse JSON from the request body
-app.use(morgan("combined")); // Log all requests to the console
-app.use(express.static("../client/build")); // Needed for serving production build of React
+app.use(morgan('combined')); // Log all requests to the console
+app.use(express.static('../client/build')); // Needed for serving production build of React
 
 /**** Database ****/
-const questionDB = require("./question_db")(mongoose);
+const kittenDB = require('./question_db')(mongoose);
 
 /**** Routes ****/
-app.get("/api/questions", async (req, res) => {
-  const questions = await questionDB.getQuestions();
-  res.json(questions);
+app.get('/api/kittens', async (req, res) => {
+    const kittens = await kittenDB.getAllQuestions();
+    res.json(kittens);
 });
 
-app.get("/api/questions/:id", async (req, res) => {
-  let id = req.params.id;
-  const question = await questionDB.getQuestion(id);
-  res.json(question);
+app.get('/api/kittens/:id', async (req, res) => {
+    let id = req.params.id;
+    const kitten = await kittenDB.getQuestion(id);
+    res.json(kitten);
 });
 
-app.post("/api/questions", async (req, res) => {
-  let question = {
-    question: req.body.name,
-    answers: [], // Empty hobby array
-  };
-  const newQuestion = await questionDB.createQuestion(question);
-  res.json(newQuestion);
+app.post('/api/kittens', async (req, res) => {
+    let question = {
+        text : req.body.content,
+        answers : [] // Empty hobby array
+    };
+    const newQuestion = await kittenDB.createQuestion(question);
+    res.json(newQuestion);
 });
 
-app.post("/api/questions/:id/answers", async (req, res) => {
-  const id = req.params.id;
-  const answer = req.body.hobby;
-  const updatedQuestion = await questionDB.addAnswer(id, answer);
-  res.json(updatedQuestion);
+app.post('/api/kittens/:id/hobbies', async (req, res) => {
+    const id = req.params.id;
+    const hobby = req.body.hobby;
+    const updatedKitten = await kittenDB.addHobby(id, hobby);
+    res.json(updatedKitten);
 });
 
 // "Redirect" all get requests (except for the routes specified above) to React's entry point (index.html) to be handled by Reach router
@@ -53,13 +53,14 @@ app.get("*", (req, res) => {
 
 /**** Start ****/
 const url =
-  process.env.MONGO_URL ||
-  "mongodb+srv://tajsonik:836Ce881b@cluster0-23gsy.mongodb.net/question_db?retryWrites=true&w=majority";
+  process.env.MONGO_URL ||'mongodb://heroku_h96hlslg:ap6lfu5h7aar88djijf3c9866g@ds235437.mlab.com:35437/heroku_h96hlslg';
+  // "mongodb+srv://tajsonik:836Ce881b@cluster0-23gsy.mongodb.net/question_db?retryWrites=true&w=majority";
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
-    await questionDB.bootstrap(); // Fill in test data if needed.
+    await kittenDB.bootstrap(); // Fill in test data if needed.
     await app.listen(port); // Start the API
     console.log(`Question API running on port ${port}!`);
   })
   .catch((error) => console.error(error));
+
