@@ -1,13 +1,12 @@
 import express, { Request, Response } from "express";
 import * as QuestionService from "./questions.service";
-import { Questions } from "./questions.interface";
 import { Question } from "./question.interface";
 export const questionsRouter = express.Router();
 
 // GET questions/
 questionsRouter.get("/", async (req: Request, res: Response) => {
   try {
-    const questions: Questions = await QuestionService.findAll();
+    const questions = await QuestionService.findAll();
 
     res.status(200).send(questions);
   } catch (e) {
@@ -17,10 +16,10 @@ questionsRouter.get("/", async (req: Request, res: Response) => {
 
 // GET questions/:id
 questionsRouter.get("/:id", async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
+  const id: string = req.params.id;
 
   try {
-    const question: Question = await QuestionService.find(id);
+    const question = await QuestionService.find(id);
 
     res.status(200).send(question);
   } catch (e) {
@@ -31,7 +30,7 @@ questionsRouter.get("/:id", async (req: Request, res: Response) => {
 // POST questions/
 questionsRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const question: Question = req.body.question;
+    const question: Question = req.body;
 
     await QuestionService.create(question);
 
@@ -42,11 +41,12 @@ questionsRouter.post("/", async (req: Request, res: Response) => {
 });
 
 // PUT questions/
-questionsRouter.put("/", async (req: Request, res: Response) => {
+questionsRouter.put("/:id", async (req: Request, res: Response) => {
   try {
-    const question: Question = req.body.question;
+    const questionId: string = req.params.id;
+    const question: Question = req.body;
 
-    await QuestionService.update(question);
+    await QuestionService.update(questionId, question);
 
     res.sendStatus(200);
   } catch (e) {
@@ -57,7 +57,7 @@ questionsRouter.put("/", async (req: Request, res: Response) => {
 // DELETE questions/:id
 questionsRouter.delete("/:id", async (req: Request, res: Response) => {
   try {
-    const id: number = parseInt(req.params.id, 10);
+    const id: string = req.params.id;
     await QuestionService.remove(id);
 
     res.sendStatus(200);

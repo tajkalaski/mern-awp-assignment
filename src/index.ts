@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import mongoose from "mongoose";
 import { questionsRouter } from "./questions/questions.router";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/404.middlewre";
@@ -50,6 +51,17 @@ if (module.hot) {
   module.hot.accept();
   module.hot.dispose(() => server.close());
 }
+
+/**** Start ****/
+const url =
+  process.env.MONGO_URL ||
+  "mongodb://heroku_h96hlslg:ap6lfu5h7aar88djijf3c9866g@ds235437.mlab.com:35437/heroku_h96hlslg";
+mongoose
+  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(async () => {
+    await server; // Start the API
+  })
+  .catch((error: any) => console.error(error));
 
 const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

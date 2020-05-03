@@ -1,81 +1,29 @@
-/**
- * Data Model Interfaces
- */
-
 import { Question } from "./question.interface";
-import { Questions } from "./questions.interface";
+import { Question as QuestionModel } from "./question.model";
 
-/**
- * In-Memory Store
- */
-
-const questions: Questions = {
-  1: {
-    id: 1,
-    text: "Burger",
-    answers: [
-      {
-        id: 11,
-        text: "Blubb",
-        rating: 10,
-      },
-    ],
-  },
-  2: {
-    id: 2,
-    text: "Pizza",
-    answers: [
-      {
-        id: 12,
-        text: "Blubb",
-        rating: 10,
-      },
-    ],
-  },
+export const findAll = async () => {
+  return QuestionModel.find({}, () => {});
 };
 
-/**
- * Service Methods
- */
-
-export const findAll = async (): Promise<Questions> => {
-  return questions;
+export const find = async (id: string) => {
+  return QuestionModel.findById(id, (err: Error) => {
+    if (err) {
+      console.log(err);
+    }
+  });
 };
 
-export const find = async (id: number): Promise<Question> => {
-  const record: Question = questions[id];
-
-  if (record) {
-    return record;
-  }
-
-  throw new Error("No record found");
+export const create = async (newQuestion: Question) => {
+  const createNewQuestion = new QuestionModel(newQuestion);
+  return createNewQuestion.save();
 };
 
-export const create = async (newQuestion: Question): Promise<void> => {
-  const id = new Date().valueOf();
-  questions[id] = {
-    ...newQuestion,
-    id,
-  };
+export const update = async (id: string, updatedQuestion: Question) => {
+  return QuestionModel.findByIdAndUpdate(id, updatedQuestion);
 };
 
-export const update = async (updatedQuestion: Question): Promise<void> => {
-  if (questions[updatedQuestion.id]) {
-    questions[updatedQuestion.id] = updatedQuestion;
-    return;
-  }
-
-  throw new Error("No record found to update");
+export const remove = async (id: string) => {
+  return QuestionModel.findByIdAndDelete(id);
 };
 
-export const remove = async (id: number): Promise<void> => {
-  const record: Question = questions[id];
-
-  if (record) {
-    delete questions[id];
-    return;
-  }
-
-  throw new Error("No record found to delete");
-};
+// https://dev.to/nyagarcia/pokeapi-rest-in-nodejs-with-express-typescript-mongodb-and-docker-part-3-494a
