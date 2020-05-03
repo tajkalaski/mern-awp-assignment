@@ -15,7 +15,7 @@ const questions: Questions = {
     text: "Burger",
     answers: [
       {
-        id: 1,
+        id: 11,
         text: "Blubb",
         rating: 10,
       },
@@ -26,7 +26,7 @@ const questions: Questions = {
     text: "Pizza",
     answers: [
       {
-        id: 2,
+        id: 12,
         text: "Blubb",
         rating: 10,
       },

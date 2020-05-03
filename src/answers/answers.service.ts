@@ -11,12 +11,12 @@ import { Answer } from "./answer.interface";
 
 const answers: Answers = {
   1: {
-    id: 1,
+    id: 11,
     text: "Burger",
     rating: 10,
   },
   2: {
-    id: 2,
+    id: 12,
     text: "Pizza",
     rating: 30,
   },
