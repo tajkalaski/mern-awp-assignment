@@ -8,7 +8,7 @@ import {
 import { Questions } from "./components/Questions";
 import { AskQuestion } from "./components/AskQuestion";
 import { Home } from "./components/Home";
-import { Button, Container, Link, Typography } from "@material-ui/core";
+import { Button, Container, Link } from "@material-ui/core";
 
 export default function App() {
   return (
