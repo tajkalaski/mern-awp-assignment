@@ -9,6 +9,7 @@ import { notFoundHandler } from "./middleware/404.middlewre";
 
 dotenv.config();
 
+// We want to error out when no PORT was set in .env file
 if (!process.env.PORT) {
   process.exit(1);
 }
@@ -20,8 +21,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("../client/build")); // Needed for serving production build of React
 app.use("/questions", questionsRouter);
-// Tajsonik add this -___-
-//app.use("/answers", questionsRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
@@ -52,10 +51,8 @@ if (module.hot) {
   module.hot.dispose(() => server.close());
 }
 
-/**** Start ****/
-const url =
-  process.env.MONGO_URL ||
-  "mongodb://heroku_h96hlslg:ap6lfu5h7aar88djijf3c9866g@ds235437.mlab.com:35437/heroku_h96hlslg";
+const local_db = "mongodb://root:rude@localhost:27017/questions";
+const url = process.env.MONGO_URL || local_db;
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
