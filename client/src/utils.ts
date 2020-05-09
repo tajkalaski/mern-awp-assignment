@@ -4,6 +4,7 @@ export function fetchFromAPI(
 ): Promise<Response> {
   return window.fetch(url, {
     credentials: "same-origin",
+    headers: [["Content-Type", "application/json"]],
     ...init,
   });
 }

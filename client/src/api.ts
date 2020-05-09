@@ -1,8 +1,15 @@
 import { fetchFromAPI } from "./utils";
 
+export interface Answer {
+  id: number;
+  text: string;
+  rating: number;
+}
+
 export interface Question {
   id: number;
   text: string;
+  answers: Answer[];
 }
 
 export async function getQuestions(): Promise<Question[]> {
@@ -20,7 +27,7 @@ export async function createQuestion(text: string): Promise<any> {
   try {
     let response = await fetchFromAPI(url, {
       method: "POST",
-      body: JSON.stringify(text),
+      body: JSON.stringify({ text }),
     });
     return await response.json();
   } catch (error) {
