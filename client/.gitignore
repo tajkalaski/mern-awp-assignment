@@ -8,9 +8,6 @@
 # testing
 /coverage
 
-# production
-/build
-
 # misc
 .DS_Store
 .env.local
@@ -31,4 +28,3 @@ yarn-error.log*
 
 # Local History for Visual Studio Code
 .history/
-dist/

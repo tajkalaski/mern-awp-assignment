@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import { questionsRouter } from "./questions/questions.router";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/404.middlewre";
-
+import path from "path";
 dotenv.config();
 
 // We want to error out when no PORT was set in .env file
@@ -19,9 +19,13 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use(express.static("../client/build")); // Needed for serving production build of React
-app.use("/questions", questionsRouter);
+app.use(express.static(path.resolve("./") + "/client/build/"));
 
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("./") + "/client/build/");
+});
+
+app.use("/questions", questionsRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
