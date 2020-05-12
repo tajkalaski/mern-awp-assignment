@@ -25,5 +25,3 @@ export const update = async (id: string, updatedQuestion: Question) => {
 export const remove = async (id: string) => {
   return QuestionModel.findByIdAndDelete(id);
 };
-
-// https://dev.to/nyagarcia/pokeapi-rest-in-nodejs-with-express-typescript-mongodb-and-docker-part-3-494a

@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import { AnswerSchema } from "../answers/answer.schema";
 
 const QuestionSchema = new mongoose.Schema({
   text: String,
@@ -6,10 +7,7 @@ const QuestionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  answers: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Answer",
-  },
+  answers: [AnswerSchema],
 });
 
 export const Question = mongoose.model("Question", QuestionSchema);

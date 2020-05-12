@@ -64,7 +64,7 @@ export const Questions = () => {
                 >{`Question: ${q.text}`}</Typography>
                 <Typography>
                   {q.answers.map((a) => {
-                    <Typography>{a.rating}</Typography>;
+                    <Typography>{a.text}</Typography>;
                   })}
                 </Typography>
               </CardContent>

@@ -6,11 +6,7 @@ const AnswerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  question: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Question",
-  },
   rating: Number,
 });
 
-export const Answer = mongoose.model("Answer", AnswerSchema);
+export { AnswerSchema };
