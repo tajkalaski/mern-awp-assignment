@@ -29,4 +29,4 @@ package-lock.json
 # Local History for Visual Studio Code
 .history/
 
-dist/
+build/
