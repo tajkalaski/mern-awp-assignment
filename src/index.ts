@@ -19,10 +19,10 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.resolve("./") + "/client/build/"));
+app.use(express.static(path.resolve("./") + "/client/dist/"));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve("./") + "/client/build/");
+  res.sendFile(path.resolve("./") + "/client/dist/");
 });
 
 app.use("/questions", questionsRouter);

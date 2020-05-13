@@ -7,7 +7,7 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
   },
   output: {
-    path: path.join(__dirname, "/build"),
+    path: path.join(__dirname, "dist"),
     filename: "bundle.min.js",
   },
   module: {
