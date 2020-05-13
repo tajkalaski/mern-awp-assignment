@@ -20,7 +20,7 @@
   "scripts": {
     "bundle": "webpack",
     "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production"
+    "build": "webpack -- --mode production --config webpack.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
