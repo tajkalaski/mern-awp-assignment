@@ -56,7 +56,7 @@ if (module.hot) {
 }
 
 const local_db = "mongodb://root:rude@localhost:27017/questions";
-const url = process.env.MONGO_URL || local_db;
+const url = process.env.MONGODB_URI || local_db;
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
