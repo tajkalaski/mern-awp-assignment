@@ -1,9 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: "./src/index",
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
@@ -14,15 +13,26 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: "awesome-typescript-loader",
+        test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+        ],
       },
     ],
   },
   plugins: [
-    new CaseSensitivePathsPlugin(),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+      filename: "./index.html",
     }),
   ],
 };
