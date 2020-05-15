@@ -6,13 +6,13 @@ export interface Answer {
   rating: number;
 }
 
-export interface Question {
+export interface IQuestion {
   id: number;
   text: string;
   answers: Answer[];
 }
 
-export async function getQuestions(): Promise<Question[]> {
+export async function getQuestions(): Promise<IQuestion[]> {
   let url = encodeURI(`http://localhost:7007/questions`);
   try {
     let response = await fetchFromAPI(url);
@@ -36,8 +36,8 @@ export async function createQuestion(text: string): Promise<any> {
 }
 
 export async function updateQuestion(
-  id: string,
-  updatedQuestion: Question
+  id: number,
+  updatedQuestion: IQuestion
 ): Promise<any> {
   let url = encodeURI(`http://localhost:7007/questions/${id}`);
   try {
