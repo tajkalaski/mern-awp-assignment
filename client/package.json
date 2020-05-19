@@ -2,7 +2,6 @@
   "name": "qa-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:7007",
   "dependencies": {
     "@atlaskit/button": "^13.0.0",
     "@atlaskit/css-reset": "latest",
