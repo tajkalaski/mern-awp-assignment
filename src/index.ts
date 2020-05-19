@@ -65,5 +65,5 @@ mongoose
   .catch((error: any) => console.error(error));
 
 const server = app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`Server is now Listening on port ${PORT}`);
 });
