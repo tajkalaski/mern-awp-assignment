@@ -21,7 +21,7 @@
   "scripts": {
     "bundle": "webpack",
     "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production"
+    "build": "webpack --config webpack.config.js --mode production"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,5 +54,9 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
+  },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.9.0"
   }
 }
