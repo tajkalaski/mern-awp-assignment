@@ -9,12 +9,7 @@ import { notFoundHandler } from "./middleware/404.middlewre";
 import path from "path";
 dotenv.config();
 
-// We want to error out when no PORT was set in .env file
-if (!process.env.PORT) {
-  process.exit(1);
-}
-
-const PORT: string = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(helmet());
 app.use(cors());
