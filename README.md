@@ -1,10 +1,14 @@
-# Local dev
+# Q&A App
 
-### Backend (in two sep tabs)
+Advanced Web Programming App Assigment - focus on functionalities (design not included in the grade)
 
-1. `npm run dev`
-2. `npm start`
+## Check it out online
 
-### Frontend
+[Q&A App](https://tajsonik-mern-awp.herokuapp.com/)
 
-1. Soon
+## General Info
+
+* React with Typescript
+* Express with Typescript
+* Deployed and hosted on Heroku
+
